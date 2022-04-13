@@ -19,37 +19,38 @@
     <body class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4">
-                    @foreach ($records as $item)
-                    <form action="{{ route('personality.calculate') }}" method="post">
+
+                    <form action="{{ route('assessment.register.'.$records->currentPage().'.store') }}" method="post">
                         @csrf
-                        <div class="card mt-5">
-                            <div class="card-header">
-                                {{ $item->id }}.
-                                {{ $item->question }}
-                            </div>
-                            <div class="card-body">
-                                @foreach ($item->answers as $value)
-                                <p></p>
-                                <div class="input-group mr-5">
-                                    <div class="input-group-prepend mr-5">
-                                        <div class="input-group-text mr-5">
-                                            <input type="radio" name="answer[{{ $item->id }}]" aria-label="{{ $value->answer }}" class="mr-5" value="{{ $value->answer.$value->points }}">
-                                            <label class="ml-5 px-2">{{ $value->answer }}</label>
-                                        </div>
-                                    </div>
+                        @foreach ($records as $item)
+                            <div class="card mt-5">
+                                <div class="card-header">
+                                    {{ $item->id }}.
+                                    {{ $item->question }}
                                 </div>
-                                @endforeach
+                                <div class="card-body">
+                                    @foreach ($item->answers as $value)
+                                        <p></p>
+                                        <div class="input-group mr-5">
+                                            <div class="input-group-prepend mr-5">
+                                                <div class="input-group-text mr-5">
+                                                    <input type="radio" name="answer{{ $item->id }}" aria-label="{{ $value->answer }}" class="mr-5" value="{{ $value->answer.$value->points }}" required>
+                                                    <label class="ml-5 px-2">{{ $value->answer }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="{{ $records->previousPageUrl() }}" class="btn btn-sm btn-dark {{ $records->onFirstPage() ? 'disabled' : '' }}">Previous</a>
-                            @if ($records->onLastPage())
-                                <input type="submit" class="btn btn-sm btn-success">
-                            @else
-                                <a href="{{ $records->nextPageUrl() }}" type="button" class="btn btn-sm btn-dark {{ $records->onLastPage() ? 'disabled' : '' }}" >Next</a>
-                            @endif
-                        </div>
-                    @endforeach
+                            <div class="mt-3">
+                                <a href="javascript:history.back()" class="btn btn-sm btn-dark {{$records->onFirstPage() ? 'disabled' : ''}}">
+                                    Previous
+                                </a>
+
+
+                                <input type="submit" class="btn btn-sm btn-success" value="{{ $records->onLastPage() ? 'Submit' : 'Next'  }}">
+                            </div>
+                        @endforeach
 
                 </form>
             </div>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AssessmentControllerStep1;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AssessmentController::class)->group(function(){
-    Route::get('/', 'index');
-    Route::post('/calculate', 'calculatePersonality')->name('personality.calculate');
+Route::get('/', function(){
+    return redirect('assessment/personality');
 });
+
+
+Route::multistep('assessment/personality', 'App\Http\Controllers\AssessmentController')
+    ->steps(5)
+    ->name('assessment.register');
