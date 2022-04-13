@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
     return redirect('assessment/personality');
-});
+})->name('home');
 
 
 Route::multistep('assessment/personality', 'App\Http\Controllers\AssessmentController')
